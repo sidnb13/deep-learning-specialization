@@ -16,7 +16,7 @@ if __name__ == "__main__":
         fileName = str(md_file).replace('.md','')
         os.system(f'pandoc {folderSrc}/{md_file} --pdf-engine=pdflatex -o {folderPdf}/{fileName}.pdf -V geometry:margin=1in')
 
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 1:
         pageRanges = sys.argv[1].split(',')
     else:
         pageRanges = [f'1-{len(files)}']
