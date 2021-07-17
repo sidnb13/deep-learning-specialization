@@ -8,7 +8,7 @@ author: Sidharth Baskaran
 date: July 2021
 graphics: true
 header-includes:
-- \graphicspath{{{"./images/"}}}
+- \graphicspath{{{{./images/}}}}
 ---
 '''
 
