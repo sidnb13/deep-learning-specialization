@@ -27,7 +27,7 @@ header-includes:
 * Single node takes in all elements of a feature
 * Notation $\rightarrow$ $a_i^{(l)}$ is the $i$th node of the $l$th layer
 * Want to vectorize $z_i^{[l]}=w_i^{[l]T}x+b_i^{[l]},a_i^{[l]}=\sigma(z_i^{[l]})$
-* $w_i^{[l]T}$ is a row-vector, so results in a matrix when vectorized, with the row vectors stacked. Then just multiply by $x$, i.e. vector 
+* $w_i^{[l]T}$ is a row-vector, so results in a matrix when vectorized, with the row vectors stacked. Then just multiply by $x$, i.e. vector
  
 $$z^{[l]}=W^{[l]}x^{[l]}+b^{[l]}$$
 
@@ -102,3 +102,28 @@ $$
   * $g'(z)=\begin{cases}0.01,z<0\\1,z>0\\\mathrm{DNE},z=0\end{cases}$
 
 # Gradient Descent for Neural Networks
+
+* Parameters - $W^{[1]},(n^{[1]},n^{[0]})$, $b^{[1]},(n^{[1]},1)$, and then $W^{[2]},b^{[2]}$
+  * $n_x=n^{[0]},n^{[1]},n^{[2]}=1$
+* Cost function if $J(\mathrm{params})=\frac{1}{m}\sum_{i=1}^n \mathcal{L}(\hat{y},y)$
+* In each iteration (for $i\in [1,m]$)
+  * Compute $\hat{y}^{(i)}$ predictions
+  * Compute $dW^{[i]},db^{[i]}$
+  * Then update $w^{[i]},b^{[i]}$ with $\alpha$
+* Formulas for partial derivatives
+  * $dZ^{[2]}=A^{[2]}-Y$, where $Y$ is row vector of ground truth values
+  * $dW^{[2]}=\frac{1}{m}dZ^{[2]}A^{[1]T}$
+  * $db^{[2]}=\frac{1}{m}\text{np.sum(}dZ^{[2]}\text{,axis=1,keepdims=true)}$, prevents a rank-1 array creation
+  * $dZ^{[1]}=W^{[2]T}dZ^{[2]}.* g^{[1]'}(Z^{[1]})$, where both are $(n^{[1]},m)$
+  * $dW^{[1]}=\frac{1}{m}dZ^{[1]}X^T$
+  * $db^{[1]}=\frac{1}{m}\text{np.sum(}dZ^{[1]}\text{,axis=1,keepdims=true)}$
+  * [Backpropagation explanation](https://colah.github.io/posts/2015-08-Backprop/)
+
+# Random Initialization
+
+* Should not initialize weights ($W$) to zero
+  * Hidden units will compute same function
+* Example
+  * $W^{[1]}=$`np.random.randn((2,2))*0.01`
+  * $b^{[1]}=$`np.zeros((2,1))`
+* Large values in $W$ to start makes activation function saturated to high values, slows down learning

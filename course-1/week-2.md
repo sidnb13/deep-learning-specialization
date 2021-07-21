@@ -105,6 +105,7 @@ $$
 Initially, $J=0,dw_1=0,dw_2=0,db=0$.
 
 For $i=1\to m$
+
 * $z^{(i)}=w^Tx^{(i)}+b$
 * $a^{(i)}=\sigma(z^{(i)})$
 * $J+= \left[y^{(i)}\log a^{(i)}+(1-y^{(i)})\log(1-a^{(i)})\right]$
