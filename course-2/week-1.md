@@ -115,7 +115,7 @@ $$
 # Vanishing/exploding gradients
 
 - If there is a deep network with $L$ layers and all biases $b=0$
-  - If weight matrix $w$ values > 1, then $\hat{y}$ exponentially increases, else if < 1 exponentially decreases
+  - If weight matrix $w$ values > 1, then $\hat{y}$ exponentially increases, else if $\lt$ 1, it exponentially decreases
   - Thus gradients increase or decrease as well
 
 # Weight initialization for deep networks
