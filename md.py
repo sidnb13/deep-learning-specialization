@@ -16,4 +16,4 @@ if __name__ == '__main__':
     filePath = sys.argv[1]
     with open(filePath,'w') as f:
         f.write(PREAMBLE(sys.argv[2]))
-    os.system(f'code {filePath}')
+    os.system(f'open {filePath}')
