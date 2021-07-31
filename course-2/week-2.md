@@ -28,7 +28,7 @@ header-includes:
 ![Batch GD](../images/1627652099238.png)  
 
 - Mini-batch gradient descent
-  - Train as if new dataset on each batch
+    - Train as if new dataset on each batch
   
 ![Mini-batch GD](../images/1627652140325.png)  
 
@@ -77,3 +77,17 @@ $$v_t=\beta v_{t-1}+(1-\beta)\theta_t$$
 
 # RMSprop
 
+![Oscillations in GD](../images/1627709907271.png)  
+
+- Root mean squared propagation
+- On iteration $t$
+  - Calculate $dW$, $db$ on current minibatch
+  - $S_{dW}=\beta S_{dW}+(1-\beta)dW^2$, elementwise squaring
+  - $S_{dn}=\beta_2 S_{db}+(1-\beta_2)db^2$
+  - Keeps an exponentially weighted average of square of derivatives
+  - $W:=W-\alpha \frac{dW}{\sqrt{s_{dW}+\epsilon}}$
+  - $b:=\alpha \frac{db}{\sqrt{s_{db}+\epsilon}}$
+    - From image, want to damp out oscillations on $b$ axis
+- $\epsilon\approx 10^{-8}$ prevents undefined error for numerical stability
+
+# Adam Optimization Algorithm
