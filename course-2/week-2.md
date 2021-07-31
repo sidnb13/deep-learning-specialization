@@ -91,3 +91,38 @@ $$v_t=\beta v_{t-1}+(1-\beta)\theta_t$$
 - $\epsilon\approx 10^{-8}$ prevents undefined error for numerical stability
 
 # Adam Optimization Algorithm
+
+- Adaptive moment estimation
+- Initialize $v_{dW}=0,s_{dW}=0,v_{db}=0,s_{db}=0$
+- On iteration $t$
+  - Compute $dW,db$ using current minibatch
+  - $v_{dW}=\beta_1v_{dW}+(1-\beta_1)dW$
+  - $v_{db}=\beta_1v_{db}+(1-\beta_1)db$
+  - $s_{dW}=\beta_2s_{dW}+(1-\beta_2)dW^2$
+  - $s_{db}=\beta_2s_{db}+(1-\beta_2)db^2$
+  - $v_{dW}:=v_{dW}/(1-\beta_1^t)$, $v_{db}:=v_{db}/(1-\beta_1^t)$
+  - $s_{dW}:=s_{dW}/(1-\beta_2^t)$, $s_{db}:=s_{db}/(1-\beta_2^t)$
+  - $W:=W-\alpha \frac{v_{dW}}{\sqrt{s_{dW}+\epsilon}}$
+  - $b:=b-\alpha \frac{v_{db}}{\sqrt{s_{db}+\epsilon}}$
+- Hyperparameter choice
+  - $\alpha$ - need to tune
+  - $\beta_1=0.9$, $\beta_2=0.999$, $\epsilon\approx 10^{-8}$
+
+# Learning Rate Decay
+
+- Decreasing value of $\alpha$ lessens probability of diverging
+- Take larger steps at beg. of learning, eventually smaller
+
+$$\alpha=\frac{1}{1+\mathrm{decay}*\mathrm{epoch}}\alpha_0$$
+
+- Other methods
+  - $\alpha=\alpha_0 0.95^{\mathrm{epoch}}$
+  - $\alpha = \frac{k}{\sqrt{\mathrm{epoch}}}\alpha_0$ or $\alpha=\frac{k}{\sqrt{t}}\alpha$
+  - Discrete staircase
+  - Manual decay
+
+# Local Optima Problem
+
+- Challenge - getting stuck on a local minima
+- Saddle point has derivative 0, can then go off of side
+- Plateau $\rightarrow$ derivative close to 0 for a long time, takes long time to reach saddle
