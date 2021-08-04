@@ -94,3 +94,42 @@ $$
 
 - Need to estimate $\mu,\sigma^2$ at test time using weighted average across minibatches
 - Calculate $\mu^{\{1\}{l}},\ldots,\mu^{\{n\}{l}},$ using a moving average, same for $\sigma^2$
+
+# Softmax regression
+
+- If there are multiple classes (e.g. Chick, Dog, Cat with classes 3, 2, 1, and 0 if none)
+  - Indexes are $i\in [0,C-1]$ with $C$ classes
+
+![Softmax NN](../images/1628055090292.png)  
+
+- Output is a 4-dim layer, each node contains probability $P(\mathrm{class}|x)$
+  - Sum must be 1
+- Softmax output layer generates these outputs
+  - Is an activation function
+- Compute a temp. var $t=e^{z^{[L]}}$ elementwise of dim (4,1)
+  - $a^{[L]}=\frac{e^{z^{[L]}}}{\sum_{i=1}^4 t_i}$ such that $a_i^{[L]}=\frac{t_i}{\sum_{i=1}^4 t_i}$
+- Resulting probabilities are the desired classifications
+- Unusual as it takes in vectorial input, not some $\mathbb{R}$f
+- Softmax can represent linear decision boundaries between multiple classes (without hidden layers to learn nonlinear ones)
+
+![Example](../images/1628056050584.png)  
+
+# Training a Softmax Classifier
+
+- A hardmax would map the vector $z^{[L]}$ to either 0 or 1, whereas softmax is a gentle, more precise mapping
+- Is a generalization of logistic regression to $C$ classes
+- Loss function
+  - Makes corresponding probability of the ground truth class as high as possible $\rightarrow$ minimizes the loss
+
+$$
+\mathcal{L}(\hat{y},y)=-\sum_{j=1}^4 y_j\log \hat{y}_j
+$$
+
+- Cost $J$ on entire training set
+
+$$
+J=\frac{1}{m}\sum_{i=1}^m \mathcal{L}(\hat{y}^{(i)},y^{(i)})
+$$
+
+- Gradient descent with softmax
+  - Key equation is $dz^{[L]}=\hat{y}-y$ which are all (4,1) vectors
