@@ -19,8 +19,6 @@ header-includes:
   - Fit test set well on cost function
   - Performs well in real world
 - On each assumption, want a distinct set of knobs to tune
-- 
-
 # Single Number Evaluation Metric
 
 - Precision $\rightarrow$ of classified examples, which were classified correctly
@@ -58,3 +56,51 @@ header-includes:
   - Define metric
   - Worry separately how to do well on metric
 - **If doing well on metric + dev set $\neq$ doing well on application, change metric/dev set**
+
+# Human-level performance
+
+- Algorithm stablilizes in accuracy after exceeding human performance $\rightarrow$ theoretical Bayes optimal error
+- As long as ML worse than humans
+  - Get labeled data from humans
+  - Gain insight from manual error analysis
+  - Better analysis of bias/variance
+# Avoidable bias
+
+- If training and dev error much more than human error, then is a high bias problem
+- If human error is similar, focus on variance
+- Treat human level error as proxy for Bayes error
+- Difference between Bayes (Human) error and training error is **avoidable bias**
+- Difference between training and dev error is **variance**
+
+# Understanding human-level performance
+
+- Human error is a proxy for Bayes optimal error
+- If training and dev error is very similar, then want a lower human error
+  - Allows for adjusting addressing avoidable bias problem which would be otherwise ignored
+
+![Human-level performance bias/variance](../images/1628569101217.png)  
+
+# Surpassing Human-Level Performance
+
+- Given multiple error sources, sometimes can't tell if it is a bias or variance issue
+- Cannot rely on intuition to determine what changes to make if model surpasses human error at its lowest
+- Surpassing examples
+  - Online advertising
+  - Product recommendations
+  - Logistics
+  - Loan approval
+- Humans good at natural perception tasks in general
+
+# Improving Model Performance
+
+- Fundamental assumptions of supervised learning
+  - Can fit training set well
+  - Training set performance generalizes well to dev/test set
+- Reducing avoidable bias
+  - Bigger model
+  - Better/longer optimization algorithms
+  - NN architecture/hyperparameter search improvements
+- Variance improvements
+  - More data
+  - Regularization $\rightarrow$ $L_2$, dropout, data aug.
+  - Better architecture
