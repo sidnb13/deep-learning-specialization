@@ -48,3 +48,63 @@ header-includes:
   - Essentially choose best/valuable data of the training set in majority
 
 # Bias and Variance with Mismatched Data Distributions
+
+- Example: human cat classification has near 0% error
+- Define a new data subset $\rightarrow$ same distribution as training set but not used for training
+  - Randomly shuffle dataset and select a section
+  - Do not train model on this
+- Data mismatch problem $\rightarrow$ data does well on undesired distribution
+
+![General formulation](../images/1630685016285.png)  
+
+# Addressing Data Mismatch
+
+- Manual error analysis, can figure out cause of difference between training and dev/test sets
+- Make training data more similar, or collect data similar to dev/test sets
+- Artificial data synthesis
+  - E.g. superposition of audio effects
+  - Artificial car images
+
+# Transfer learning
+
+- Apply learning from one task to another
+- Example
+  - Train model on image recognition task
+  - Swap in new dataset $(x,y)$ with the diagnoses
+  - Initialize last layer weights
+  - Possibly retrain last few layers
+- If retrain entire network with updates based on new data
+  - **Pre-training** is done on the network using old weights for initialization
+- Transfer learning is useful in applying model from task $A$ to task $B$ which lacks enough training data
+
+# Multi-task learning
+
+- If there are $n$ classes, each training example will be a $n\times 1$ vector with multiple "hot" classes ($\mathbb{R}^n$)
+- Network would output $n\times 1$ vector with each entry representing a class
+- Loss would be $\frac{1}{m}\sum_{i=1}^n\sum_{j=1}^4\mathcal{L}(\hat{y}_j^{(i)},y_j^{i})$
+- Is not softmax regression $\rightarrow$ each image can have multiple labels
+- Multi-task learning because network is solving $n$ problems
+  - Does each image have each of these $n$ classification features
+- Used when training on set of tasks that benefit from sharing low-level features (e.g. contours, dots)
+- Amount of data for each task available is similar
+- Can train if big network architecture is feasible
+
+# End-to-end deep learning
+
+- Multistep approach to complete multiple steps in, for example, image recognition
+  - Breaking problem down into multiple approaches is a better approach
+- Can build networks to perform individual tasks in a project pipeline
+- End to end approach does not work best in modern practice
+
+
+# When to use end-to-end approach
+
+- Pros
+  - Lets the data speak $\rightarrow$ appropriate mapping $x\rightarrow y$ emerges, and human preconceptions will not be present
+  - Less hand-designing of components needed
+- Cons
+  - May need large amounts of data $\rightarrow$ need to learn from one input end to another
+  - Excludes potentially useful hand-designed components
+    - Two components: data and what is hand-designed
+- Application of end-to-end
+  - Is there sufficient data to learn a complex mapping $x\to y$
