@@ -5,7 +5,7 @@ import os, sys
 PREAMBLE = lambda title: f'''---
 title: {title}
 author: Sidharth Baskaran
-date: July 2021
+date: September 2021
 graphics: true
 header-includes:
 - \graphicspath{{{{./images/}}}}
