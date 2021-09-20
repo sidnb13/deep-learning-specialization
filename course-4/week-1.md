@@ -69,3 +69,18 @@ header-includes:
     - $n\times n\;\ast\;f\times f\rightarrow n-f+1\times n-f+1$
   - Same $\rightarrow$ pad s.t. output size = input size
 - By convention, $f$ is always odd, i.e $f\mod 2\neq 0$
+
+# Strided Convolutions
+
+- Stride of $s$ means moving kernel by $s$ steps instead of default 1
+- Output dimensions become following where $p$ is the padding amount and $s$ is the stride
+
+$$\left\lfloor\frac{n+2p-f}{s}+1\right\rfloor\times \left\lfloor\frac{n+2p-f}{s}+1\right\rfloor$$
+
+- Floor because do not want kernel being outside of the image or padding region
+- A preprocessing step on convolution in mathematics
+  - Flip the kernel vertically then horizontally (mirroring)
+- Use flipped kernel for convolution $\rightarrow$ cross-correlation
+  - Not required in NNs
+- Convolution is associative but not commutative
+  - $(A*B)*C=A*(B*C)$
