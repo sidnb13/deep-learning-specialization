@@ -82,5 +82,5 @@ $$\left\lfloor\frac{n+2p-f}{s}+1\right\rfloor\times \left\lfloor\frac{n+2p-f}{s}
   - Flip the kernel vertically then horizontally (mirroring)
 - Use flipped kernel for convolution $\rightarrow$ cross-correlation
   - Not required in NNs
-- Convolution is associative but not commutative
+- Convolution obeys property of being associative but not commutative
   - $(A*B)*C=A*(B*C)$
