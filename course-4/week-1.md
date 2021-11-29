@@ -84,3 +84,46 @@ $$\left\lfloor\frac{n+2p-f}{s}+1\right\rfloor\times \left\lfloor\frac{n+2p-f}{s}
   - Not required in NNs
 - Convolution obeys property of being associative but not commutative
   - $(A*B)*C=A*(B*C)$
+
+# Convolutions over volume
+
+- In RGB image, a $6\times 6 $ image represented as $6\times 6\times 3$ stack
+- Filter also contains 3 layers (R,G,B) of size $3\times3\times 3$
+- Number of channels in image and filter must match
+- Convolution computation: Add all 3 individual layer convolutions
+
+![picture 1](../images/1638203794848.png)  
+
+- Multiple features at the same time
+  - E.g. horizontal and vertical edge detection filters
+  - Take individual outputs and stack $\rightarrow$ $n\times n\times 2$ filters if stacking 2
+- Thus the stacked multi-feature output is of dimension $n-f+1\times n-f+1\times n_c$ where $n_c$ is the number of convolutional features
+
+# Building layer of convolutional network
+
+- For the output of each filter, apply bias ($\mathbb{R}$) then ReLU
+- Then the layers are stacked
+
+![picture 2](../images/1638204258786.png)  
+
+- Thus we are taking $a^{[0]}\in (6,6,3)\rightarrow a^{[1]}\in (4,4,2)$ for example
+- Number of parameters in a layer
+  - E.g. a $3\times3\times 3$ filter with 10 filters being applied would have 27 + 1 (bias) = 28 total parameters for one filter, thus 280 overall.
+- Number of parameters remains constant regardless of size of image $\rightarrow$ useful property that prevents overfitting
+- If layer $l$ is a convolutional layer
+  - $f^{[l]}$ = filter size
+  - $p^{[l]}$ = padding
+  - $s^{[l]}$ = stride
+- The input to this layer is $n_h^{[l-1]}\times n_w^{[l-1]}\times n_c ^{[l-1]}$
+- The output volume is
+
+$$
+n_{\{h,w\}}^{[l-1]}=\left\lfloor \frac{n_{\{h,w\}}^{[l-1]}+2p^{[l]}-f^{[l]}}{s} + 1 \right\rfloor
+$$
+
+- Size of each filter is $f^{[l]}\times f^{[l]}\times n_c^{[l-1]}$ because the number of channels must match that of input
+- Size of activations (output layer) are $a^{[l]}\rightarrow n_h^{[l]}\times n_w^{[l]}\times n_c^{[l]}$
+  - If using batch GD $\rightarrow$ $A^{[l]}\rightarrow m\times n_h^{[l]}\times n_w^{[l]}\times n_c^{[l]}$ where $m$ is number of training examples in the batch
+- Bias will have $n_c^{[l]}$ variables, or $(1,1,1,n_c^{[l]})$
+- At the end of the convolutional layers, can flatten the final result and feed into a logistic or softmax to obtain the result
+- Types of layers in conv net $\rightarrow$ convolution (conv), pooling (pool), fully connected (FC)
