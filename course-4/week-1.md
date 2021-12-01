@@ -127,3 +127,19 @@ $$
 - Bias will have $n_c^{[l]}$ variables, or $(1,1,1,n_c^{[l]})$
 - At the end of the convolutional layers, can flatten the final result and feed into a logistic or softmax to obtain the result
 - Types of layers in conv net $\rightarrow$ convolution (conv), pooling (pool), fully connected (FC)
+
+# Pooling layers
+
+- Reduce size of representation to speed up computation
+- A max pooling layer breaks the layer into regions $\rightarrow$ use the max of each corresponding region
+
+![picture 1](../images/1638376767307.png)  
+
+- Hyperparameters of max pooling
+  - $f=2, s=2$ for the **filter size and stride**
+- Output size of max pooling is $\left\lfloor \frac{n+2p-f}{s}+1 \right\rfloor$
+- On 3D input, the output of max pooling has the same 3rd dimension
+  - Pool on each channel independently
+- Average pooling is similar, takes the average of each region
+- Max pooling is more widely used
+- Do not use padding with max pooling $\rightarrow$ $p=0$
